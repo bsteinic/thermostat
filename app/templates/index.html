@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+      <div class="input-append btn-group">
+        <a class="btn btn-primary" style="font-weight: 550;" id="mode" href="#">Mode</a>
+        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+        <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu" style="font-weight; 550;">
+          <li><a href="mode/Heat" style="font-weight: bold; border-radius:4px 4px 4px 4px; background:DarkOrange">Heat</a></li>
+          <li><a href="mode/Cool" style="font-weight: bold; border-radius:4px 4px 4px 4px; background:Aqua">Cool</a></li>
+          <li><a href="mode/Off" style="font-weight: bold;">Off</a></li>
+        </ul>
+      </div>
+      <div class="input-append btn-group">
+        <a class="btn btn-primary" style="font-weight: 550;" id="fanMode" href="#">FanMode</a>
+        <a class="btn btn-primary dropdown-toggle"  data-toggle="dropdown" href="#">
+        <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="fanmode/Auto">Auto</a></li>
+          <li><a href="fanmode/On">On</a></li>
+        </ul>
+      </div>
+      <div class="input-append btn-group">
+        <a class="btn btn-primary" style="font-weight: 550;" href="#">Bump</a>
+        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+        <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="bump/Hold/15">15</a></li>
+          <li><a href="bump/Hold/30">30</a></li>
+          <li><a href="bump/Hold/60">60</a></li>
+        </ul>
+      </div>
+
+    <p><div>{{ thermostatStatus|safe }}</div></p>
+    <div>
+    <h4 role="presentation">
+    <p>
+    <span class="label label-default" id="curTempDiv">{{ operStatus[0] }}&deg;</span>&nbsp;Current Temperature</span>
+    </p>
+    <p>
+    <span class="label label-default" id="setTempDiv">{{ operStatus[1] }}&deg;</span>&nbsp;Set Temperature</span>
+    </p>
+    <p>
+    <span class="label label-default" id="heatDiv">{{ operStatus[2] }}</span>&nbsp;Heat</span>
+    </p>
+    <p>
+    <span class="label label-default" id="acDiv">{{ operStatus[3] }}</span>&nbsp;A/C</span>
+    </p>
+    <p>
+    <span class="label label-default" id="fanDiv">{{ operStatus[4] }}</span>&nbsp;Fan</span>
+    </p>
+    </div>
+    <div class="row col-sm-4">
+    <div class="panel panel-info panel-body">{{ weatherString|safe }}</div>
+    </div>
+{% endblock %}
+

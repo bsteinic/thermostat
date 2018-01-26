@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row-fluid span6">
+<form action="" method="post" name="addVacation">
+<div class="form-group">
+  <div>
+    <label for="startDateTime">Start Date/Time</label>
+    <!--<input type="text" value="" id="startDateTime" name="startDateTime"/> -->
+    <input class="span2" type="date" value="" id="startDate" name="startDate"/>
+    <input class="span2" type="time" value="" id="startTime" name="startTime"/>
+    <label for="endDateTime">End Date/Time</label>
+    <input class="span2" type="date" value="" id="endDate" name="endDate"/>
+    <input class="span2" type="time" value="" id="endTime" name="endTime"/>
+    <!--<input type="text" value="" id="endDateTime" name="endDateTime"/> -->
+  </div>
+  <div class="row-fluid">
+    <label for="setTemp">Set Temp.</label>
+    <select class="selectpicker span1" name='setTemp'>
+      {% for set_temp_opt in set_temp_choices %}
+        {% if set_temp_opt == setTemp %}
+          <option value="{{set_temp_opt}}" selected>{{set_temp_opt}}&deg;</option>
+        {% else %}
+          <option value="{{set_temp_opt}}">{{set_temp_opt}}&deg;</option>
+        {% endif %}
+      {% endfor %}
+    </select>
+  </div>
+  <div class="row-fluid">
+    <button class="btn btn-primary" type="submit">Save</button>
+  </div>
+</div>
+</form>
+</div>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui-sliderAccess.js"></script>
+<script>
+/*
+  jQuery Document ready
+*/
+$(function()
+{
+  $('#startDateTime').datetimepicker(
+  {
+    dateFormat: "yy-mm-dd",
+    /*
+      timeFormat
+      Default: "HH:mm",
+      A Localization Setting - String of format tokens to be replaced with the time.
+    */
+    timeFormat: "HH:mm",
+    /*
+      hourMin
+      Default: 0,
+      The minimum hour allowed for all dates.
+    */
+    hourMin: 0,
+    /*
+      hourMax
+      Default: 23, 
+      The maximum hour allowed for all dates.
+    */
+    hourMax: 23,
+    /*
+      numberOfMonths
+      jQuery DatePicker option
+      that will show two months in datepicker
+    */
+    numberOfMonths: 2,
+    /*
+      minDate
+      jQuery datepicker option 
+      which set today date as minimum date
+    */
+    minDate: 0,
+    /*
+      maxDate
+      jQuery datepicker option 
+      which set 30 days later date as maximum date
+    */
+    maxDate: 60
+  });
+  $('#endDateTime').datetimepicker(
+  {
+    dateFormat: "yy-mm-dd",
+    /*
+      timeFormat
+      Default: "HH:mm",
+      A Localization Setting - String of format tokens to be replaced with the time.
+    */
+    timeFormat: "HH:mm",
+    /*
+      hourMin
+      Default: 0,
+      The minimum hour allowed for all dates.
+    */
+    hourMin: 0,
+    /*
+      hourMax
+      Default: 23, 
+      The maximum hour allowed for all dates.
+    */
+    hourMax: 23,
+    /*
+      numberOfMonths
+      jQuery DatePicker option
+      that will show two months in datepicker
+    */
+    numberOfMonths: 4,
+    /*
+      minDate
+      jQuery datepicker option 
+      which set today date as minimum date
+    */
+    minDate: 0,
+    /*
+      maxDate
+      jQuery datepicker option 
+      which set 60 days later date as maximum date
+    */
+    maxDate: 60
+  });
+  
+  /*
+    below code just enable time picker.
+  */  
+  $('#basic_example_2').timepicker();
+});
+</script>
+{% endblock %}

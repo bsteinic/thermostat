@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row-fluid span6">
+<form action="" method="post" name="addSched">
+  <label for="type">Mode</label>
+  <select class="selectpicker span2" name='type'>
+  {% for type_opt in type_choices %}
+    {% if type_opt == type %}
+      <option value="{{type_opt}}" selected>{{type_opt}}</option>
+    {% else %}
+      <option value="{{type_opt}}">{{type_opt}}</option>
+    {% endif %}
+  {% endfor %}
+  </select>
+  <label for="day">Day of Week</label>
+  <select class="selectpicker span2" name='day'>
+  {% for day_opt in day_choices %}
+    {% if day_opt == day %}
+      <option value="{{day_opt}}" selected>{{dayOfWeek[day_opt]}}</option>
+    {% else %}
+      <option value="{{day_opt}}">{{dayOfWeek[day_opt]}}</option>
+    {% endif %}
+  {% endfor %}
+  </select>
+  <label for="hour">Time</label>
+  <select class="selectpicker span1" name='hour'>
+  {% for hour_opt in hour_choices %}
+    {% if hour_opt == hour %}
+      <option value="{{hour_opt}}" selected>{{hour_opt}}</option>
+    {% else %}
+      <option value="{{hour_opt}}">{{hour_opt}}</option>
+    {% endif %}
+  {% endfor %}
+  </select><strong>:</strong>
+  <select class="selectpicker span1" name='minute'>
+  {% for minute_opt in minute_choices %}
+    {% if minute_opt == minute %}
+      <option value="{{minute_opt}}" selected>{{minute_opt}}</option>
+    {% else %}
+      <option value="{{minute_opt}}">{{minute_opt}}</option>
+    {% endif %}
+  {% endfor %}
+  </select>&nbsp;&nbsp;&nbsp;&nbsp;
+  <label for="setTemp">Set Temp</label>
+  <select class="selectpicker span1" name='setTemp'>
+  {% for set_temp_opt in set_temp_choices %}
+    {% if set_temp_opt == setTemp %}
+      <option value="{{set_temp_opt}}" selected>{{set_temp_opt}}&deg;</option>
+    {% else %}
+      <option value="{{set_temp_opt}}">{{set_temp_opt}}&deg;</option>
+    {% endif %}
+  {% endfor %}
+  </select>
+  <div class="row-fluid">
+    <button class="btn btn-primary" type="submit">Save</button>
+  </div>
+</form>
+</div>
+{% endblock %}

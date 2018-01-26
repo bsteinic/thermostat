@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="col-md-6">
+<table class="table">
+  <thead>
+    <tr>
+      <th>Start</th>
+      <th>End</th>
+      <th>Temp</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  </tbody>
+{% for item in vacations %}
+  <tr>
+    <td>{{ item.startDateTime }}</td>
+    <td>{{ item.endDateTime }}</td>
+    <td style="text-align:left"> {{ item.setTemp }}&deg;</td>
+    <td><a href="/editVacation/{{ item.id }}">Edit</a></td>
+    <td><a href="/deleteVacation/{{ item.id }}">Delete</a></td>
+  </tr>
+{% endfor %}
+  </tbody>
+  <div class="row-fluid span6">
+    <a class="btn btn-default" href="/addVacation">New Vacation</a>
+  </div>
+</table>
+</div>
+{% endblock %}

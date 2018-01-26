@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <script href="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="{{ url_for('static', filename='js/jquery.min.js') }}">\x3C/script>')</script>
+{% if title == 'Home' %}
+    <script>
+      function updateTemp() {
+        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+        $.ajax({
+          url : $SCRIPT_ROOT + "/_update",
+          success : function(result){
+            if (result.mode === 'Heat') {
+               document.getElementById('mode').style.color="DarkOrange";
+               document.getElementById('setTempDiv').style.color="DarkOrange";
+            } else if (result.mode === 'Cool') {
+               document.getElementById('mode').style.color="Aqua";
+               document.getElementById('setTempDiv').style.color="Aqua";
+            }
+            $('#mode').text(result.mode);
+            if (result.fanMode === 'Fan:Auto') {
+               document.getElementById('fanMode').style.color="White";
+            } else {
+               document.getElementById('fanMode').style.color="Yellow";
+            }
+            $('#fanMode').text(result.fanMode);
+            $('#indoorTempDiv').text(result.curTemp);
+            $('#curTempDiv').text(result.curTemp+'\u00B0');
+            $('#setTempDiv').text(result.setTemp+'\u00B0');
+            if (result.heat === 'ON') {
+               document.getElementById('heatDiv').style.color="DarkOrange";
+            } else {
+               document.getElementById('heatDiv').style.color="Black";
+            }
+            $('#heatDiv').text(result.heat);
+            if (result.ac === 'ON') {
+               document.getElementById('acDiv').style.color="Aqua";
+            } else {
+               document.getElementById('acDiv').style.color="Black";
+            }
+            $('#acDiv').text(result.ac);
+            if (result.fan === 'ON') {
+               document.getElementById('fanDiv').style.color="Yellow";
+            } else {
+               document.getElementById('fanDiv').style.color="Black";
+            }
+            $('#fanDiv').text(result.fan);
+          }
+      })
+      };
+      window.setInterval(function(){
+        updateTemp()
+      }, 10000);
+    </script>
+    <title>{{ title }}</title>
+{% elif title == 'VacationEdit' or title == 'ScheduleEdit' %}
+    <title>{{ title }}</title>
+{% else %}
+    <title>Thermostat</title>
+{% endif %}
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link rel="stylesheet" media="all" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+
+    <link href="/static/css/jquery-ui-timepicker-addon.css" rel="stylesheet" media="screen">
+  </head>
+{% if title == 'Home' %}
+  <body onload="updateTemp();">
+{% else %}
+  <body>
+{% endif %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/index">Steinicke Thermostat</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+{% if title == 'Home' %}
+            <li class="active"><a href="/index">Home</a></li>
+{% else %}
+            <li><a href="/index">Home</a></li>
+{% endif %}
+{% if title == 'ScheduleEdit' %}
+            <li class="active"><a href="/viewEditSchedule">Schedule</a></li>
+{% else %}
+            <li><a href="/viewEditSchedule">Schedule</a></li>
+{% endif %}
+{% if title == 'VacationEdit' %}
+            <li class="active"><a href="/viewEditVacation">Vacation</a></li>
+{% else %}
+            <li><a href="/viewEditVacation">Vacation</a></li>
+{% endif %}
+{% if title == 'Graph' %}
+            <li class="active"><a href="/index">Graph</a></li>
+{% else %}
+            <li><a href="/chart/1024">Graph</a></li>
+{% endif %}
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    <div class="container theme-showcase" role="main">
+<br>
+<br>
+<br>
+      {% block content %}{% endblock %}
+    </div>
+    <script src="/static/js/bootstrap.min.js"></script>
+  </body>
+</html>

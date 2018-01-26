@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<strong>
+<div class="col-md-6">
+<table class="table">
+  <tr>
+    <th>Day</th>
+    <th style="text-align:right">Time</th>
+    <th> &nbsp;&nbsp;Temp</th>
+  </tr>
+</strong>
+{% for item in sched %}
+    {% if item.type == 'Heat' %}
+      <tr style="color:#ee7600">
+    {% elif item.type == 'Cool' %}
+      <tr style="color:#0000f0">
+    {% else %}
+      <tr>
+    {% endif %}
+    <td>{{ dayOfWeek[item.day]}}</td>
+    <td style="text-align:right"> {{ item.hour}}:{{ '%02d' % item.minute|int}}</td>
+    <td style="text-align:left"> &nbsp;&nbsp;&nbsp;&nbsp;{{ item.setTemp}}&deg;</td>
+    <td> <a href="/editSchedule/{{item.id}}">Edit</a></td>
+    <td> <a href="/deleteSchedule/{{item.id}}">Delete</a></td>
+    </td>
+{% endfor %}
+    <tr>
+      <a class="btn btn-default" style="color:#ee7600" href="/addSchedule/Heat">New Heat</a>
+      <a class="btn btn-default" style="color:#0000f0" href="/addSchedule/Cool">New Cool</a>
+      <a class="btn btn-default" href="/addSchedule/Hold">New Hold</a>
+    </tr>
+</table>
+</div>
+{% endblock %}

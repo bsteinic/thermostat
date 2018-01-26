@@ -1,0 +1,10 @@
+flask
+tmp
+app.db
+config.pyc
+daemon.pyc
+myFSM.pyc
+app/__init__.pyc
+app/models.pyc
+app/views.pyc
+db_repository/__init__.pyc
