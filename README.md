@@ -44,18 +44,11 @@ R  24VAC hot  HOT
 Thermistor DS18B20
 Use (1) 2.2K upto 4.7K Ohm resistor between pin 2 and 3.
 
-| Therm |             | Raspberry Pi         |       |
-| Pin   | Description | Pin                  | RJ-45 |
-|-------|:------------|:---------------------|:------|
-| 1     | Ground      | 9, Ground Black wire | pin 6 |
-| 2     | data GPIO4  | 7, Yellow wire       | pin 3 |
-| 3     | 3V          | 1, red wire 3.3V     | pin 4 |
-
-RJ45 Connector Pin
-
-red-----3
-yellow--2  D bottom
-black---1
+| Therm Pin |  Description | Raspberry Pi Pin     | RJ-45 |
+|-----------|:-------------|:---------------------|:------|
+| 1         | Ground       | 9, Ground Black wire | pin 6 |
+| 2         | data GPIO4   | 7, Yellow wire       | pin 3 |
+| 3         | 3V           | 1, red wire 3.3V     | pin 4 |
 
 RJ-45 to db9 wiring diagram
 1 = Blue
@@ -67,28 +60,28 @@ RJ-45 to db9 wiring diagram
 7 = Brown
 8 = White
 
-added dtoverlay=w1-gpio-pullup to /boot/config.txt
-% sudo vi /etc/modules  add w1-gpio and w1_therm
+added dtoverlay=w1-gpio-pullup to /boot/config.txt also add w1-gpio and w1_therm
+```
+% sudo vi /etc/modules  
 % sudo modprobe w1-gpio
 % sudo modprobe w1-therm
 % cd /sys/bus/w1/devices
 % ls
 % cd 28-*
 % cat w1_slave
-
-Temperature sensor
-Yellow
-Black
-Red
+```
 
 WiFI Dropout issues try editing 
 % sudo vi /etc/modprobe.d/8192cu.conf
 paste following lines
+```
 # Disable power saving
 options 8192cu rtw_power_mgnt=0 rtw_enusbss=1 rtw_ips_mode=1
-
+```
+Then
+```
 % sudo reboot
-
+```
 To automatically start the thermostat install the thermostat.sh found in
 pi/ directory into /etc/init.d
 
@@ -107,20 +100,29 @@ sudo /etc/init.d watchdog start
 Software
 --------
 Raspbian distribution
+```
 % sudo apt-get install python-flask
+```
 kernel modules: w1-gpio, w1-therm
+```
 % sudo apt-get install python-sqlite sqlite3
 % sudo apt-get install python-pip 
 % sudo pip install pywapi
+```
 had to 
+```
 % wget https://launchpad.net/python-weather-api/trunk/0.3.8/+download/pywapi-0.3.8.tar.gz
+```
 then:
+```
 % python setup.py build
-%python setup.py install
-%sudo pip install feedparser
-
+% python setup.py install
+% sudo pip install feedparser
+```
 Setting TZ
+``` 
 % sudo dpkg-reconfigure tzdata
+```
 
 virtual env setup
 -----------------
