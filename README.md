@@ -43,6 +43,7 @@ R  24VAC hot  HOT
 
 Thermistor DS18B20
 Use (1) 2.2K upto 4.7K Ohm resistor between pin 2 and 3.
+
 | Therm |             | Raspberry Pi         |       |
 | Pin   | Description | Pin                  | RJ-45 |
 |-------|:------------|:---------------------|:------|
@@ -51,6 +52,7 @@ Use (1) 2.2K upto 4.7K Ohm resistor between pin 2 and 3.
 | 3     | 3V          | 1, red wire 3.3V     | pin 4 |
 
 RJ45 Connector Pin
+
 red-----3
 yellow--2  D bottom
 black---1
@@ -122,7 +124,8 @@ Setting TZ
 
 virtual env setup
 -----------------
-`% sudo apt-get install python-virtualenv
+```
+% sudo apt-get install python-virtualenv
 % virtualenv flask
 % flask/bin/pip install flask
 % flask/bin/pip install flask-login
@@ -140,13 +143,15 @@ virtual env setup
 % pip install flask-wtf
 % pip install pygal
 % pip install pytz
-% pip install transitions`
+% pip install transitions
+```
 
-thereafter
-`% source flask/bin/activate`
+thereafter just use `% source flask/bin/activate`
 
-`wget http://downloads.raspberrypi.org/raspbian_latest`
-`wget https://github.com/wywin/Rubustat/archive/master.zip`
+```
+wget http://downloads.raspberrypi.org/raspbian_latest
+wget https://github.com/wywin/Rubustat/archive/master.zip
+```
 
 edit config.txt.template as config.txt
 edit mailconfg.txt.template as mailconf.txt
@@ -154,27 +159,34 @@ edit mailconfg.txt.template as mailconf.txt
 ??? edit /etc/modules adding w1_therm.ko and w1-gpio.ko
 
 added these lines to /etc/rc.local
-` modprobe w1-gpio
- modprobe w1-therm or w1_therm`
- #start the application
-` % sudo /etc/init.d/thermostat start`
+```
+modprobe w1-gpio
+modprobe w1-therm or w1_therm
+```
+To start the application `% sudo /etc/init.d/thermostat start`
 
 Installing 
 ----------
 cp this directory and its contents to the /home/pi directory
 there is a set of db python scripts to set defaults for the app.db
 
-`cp pi/thermostat file to /etc/init.d/thermostat
-% sudo update-rc.d thermostat defaults`
+```
+cp pi/thermostat file to /etc/init.d/thermostat
+% sudo update-rc.d thermostat defaults
+```
 
 MacOS installing OS on SD 
 -------------------------
 see www.raspberrypi.org/documentation/installation/installing-images/mac.md
-`% diskutil list`
+```
+% diskutil list
+```
 identify the disk of your SD diskN
-`% diskutil umount Disk /dev/diskN
+```
+% diskutil umount Disk /dev/diskN
 % sudo dd bs=1m if=image.img of=/dev/diskN
-% sudo diskutil eject /dev/diskN`
+% sudo diskutil eject /dev/diskN
+```
 
 Thermostat database
 -------------------
