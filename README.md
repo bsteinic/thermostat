@@ -27,31 +27,33 @@ Hardware Connections set in config.txt
 - AC_PIN = 17
 - FAN_PIN = 27
 
-BCM/CPU    BOARD         Conn  LED     Furnace
-GPIO 17   pin 11 === A/C    1  Yellow    Yellow
-GPIO 27   pin 13 === Fan    2  Green     Green
-GPIO 22   pin 15 === Heat   3  Red       White
-                          Hot            Red
-                          Com
+| BCM/CPU |    BOARD          | Conn |  LED    | Furnace | 
+|---------|:------------------|-----:|:--------|:--------|
+| GPIO 17 |   pin 11 === A/C  |    1 |  Yellow | Yellow  | 
+| GPIO 27 |   pin 13 === Fan  |    2 |  Green  | Green   | 
+| GPIO 22 |   pin 15 === Heat |    3 |  Red    | White   | 
+|         |               Hot |      |         | Red     |
+|         |               Com |      |         |         |
 
-C  24VAC com  COM 
+C  24VAC com  COM- 
 Y  A/C        1 yel led
 G  Fan        2 grn led
 W  Heat       3 red led
 R  24VAC hot  HOT 
 
 Thermistor DS18B20
-(1) 2.2K upto 4.7K Ohm resistor between pin 2 and 3.
-Therm               Pi
-Pin   Description   Pin                      RJ-45
-==================================================
- 1    Ground        9, Ground Black wire     pin 6
- 2    data GPIO4    7, Yellow wire           pin 3
- 3    3V            1, red wire 3.3V         pin 4
+Use (1) 2.2K upto 4.7K Ohm resistor between pin 2 and 3.
+| Therm |             | Raspberry Pi         |       |
+| Pin   | Description | Pin                  | RJ-45 |
+|-------|:------------|:---------------------|:------|
+| 1     | Ground      | 9, Ground Black wire | pin 6 |
+| 2     | data GPIO4  | 7, Yellow wire       | pin 3 |
+| 3     | 3V          | 1, red wire 3.3V     | pin 4 |
 
-          red-----3
-   RJ-45  yellow--2  D bottom
-          black---1
+RJ45 Connector Pin
+red-----3
+yellow--2  D bottom
+black---1
 
 RJ-45 to db9 wiring diagram
 1 = Blue
@@ -63,17 +65,14 @@ RJ-45 to db9 wiring diagram
 7 = Brown
 8 = White
 
-
 added dtoverlay=w1-gpio-pullup to /boot/config.txt
-   sudo vi /etc/modules  add w1-gpio and w1_therm
-   sudo modprobe w1-gpio
-   sudo modprobe w1-therm
-   cd /sys/bus/w1/devices
-   ls
-   cd 28-*
-   cat w1_slave
-
-
+% sudo vi /etc/modules  add w1-gpio and w1_therm
+% sudo modprobe w1-gpio
+% sudo modprobe w1-therm
+% cd /sys/bus/w1/devices
+% ls
+% cd 28-*
+% cat w1_slave
 
 Temperature sensor
 Yellow
@@ -81,7 +80,7 @@ Black
 Red
 
 WiFI Dropout issues try editing 
-%   sudo vi /etc/modprobe.d/8192cu.conf
+% sudo vi /etc/modprobe.d/8192cu.conf
 paste following lines
 # Disable power saving
 options 8192cu rtw_power_mgnt=0 rtw_enusbss=1 rtw_ips_mode=1
@@ -106,25 +105,24 @@ sudo /etc/init.d watchdog start
 Software
 --------
 Raspbian distribution
-sudo apt-get install python-flask
+% sudo apt-get install python-flask
 kernel modules: w1-gpio, w1-therm
-sudo apt-get install python-sqlite sqlite3
-sudo apt-get install python-pip 
-sudo pip install pywapi
-  # had to wget
-  # https://launchpad.net/python-weather-api/trunk/0.3.8/+download/pywapi-0.3.8.tar.gz
-  # then:
-  # python setup.py build
-  # python setup.py install
-sudo pip install feedparser
+% sudo apt-get install python-sqlite sqlite3
+% sudo apt-get install python-pip 
+% sudo pip install pywapi
+had to 
+% wget https://launchpad.net/python-weather-api/trunk/0.3.8/+download/pywapi-0.3.8.tar.gz
+then:
+% python setup.py build
+%python setup.py install
+%sudo pip install feedparser
 
 Setting TZ
-sudo dpkg-reconfigure tzdata
+% sudo dpkg-reconfigure tzdata
 
 virtual env setup
 -----------------
-% sudo apt-get install python-virtualenv
-
+`% sudo apt-get install python-virtualenv
 % virtualenv flask
 % flask/bin/pip install flask
 % flask/bin/pip install flask-login
@@ -142,13 +140,13 @@ virtual env setup
 % pip install flask-wtf
 % pip install pygal
 % pip install pytz
-% pip install transitions
+% pip install transitions`
 
 thereafter
-% source flask/bin/activate
+`% source flask/bin/activate`
 
-wget http://downloads.raspberrypi.org/raspbian_latest
-wget https://github.com/wywin/Rubustat/archive/master.zip
+`wget http://downloads.raspberrypi.org/raspbian_latest`
+`wget https://github.com/wywin/Rubustat/archive/master.zip`
 
 edit config.txt.template as config.txt
 edit mailconfg.txt.template as mailconf.txt
@@ -156,31 +154,31 @@ edit mailconfg.txt.template as mailconf.txt
 ??? edit /etc/modules adding w1_therm.ko and w1-gpio.ko
 
 added these lines to /etc/rc.local
- modprobe w1-gpio
- modprobe w1-therm or w1_therm
+` modprobe w1-gpio
+ modprobe w1-therm or w1_therm`
  #start the application
- % sudo /etc/init.d/thermostat start
+` % sudo /etc/init.d/thermostat start`
 
 Installing 
 ----------
 cp this directory and its contents to the /home/pi directory
 there is a set of db python scripts to set defaults for the app.db
 
-cp pi/thermostat file to /etc/init.d/thermostat
-% sudo update-rc.d thermostat defaults
+`cp pi/thermostat file to /etc/init.d/thermostat
+% sudo update-rc.d thermostat defaults`
 
 MacOS installing OS on SD 
 -------------------------
 see www.raspberrypi.org/documentation/installation/installing-images/mac.md
-%diskutil list
+`% diskutil list`
 identify the disk of your SD diskN
-% diskutil umount Disk /dev/diskN
+`% diskutil umount Disk /dev/diskN
 % sudo dd bs=1m if=image.img of=/dev/diskN
-% sudo diskutil eject /dev/diskN
+% sudo diskutil eject /dev/diskN`
 
 Thermostat database
 -------------------
-dbuser db@authroot
+login/password dbuser/db@authroot
 see app/models.py for table descriptions
 
 error_reporting(E_ALL);
@@ -221,36 +219,36 @@ https://raw.github.com/raspberrypi/firmware/$fwhash/extra/git_hash)
 git checkout $linuxhash
 
 building the source on ubuntu...
-% sudo apt-get -y update
+`% sudo apt-get -y update
 % sudo apt-get -y install build-essential git
 % cd
 % git clone git://github.com/raspberrypi/linux.git
 % git clone git://github.com/raspberrypi/tools.git
-% scp pi@X.X.X.X:\{/usr/share/doc/raspberrypi-bootloader/changelog.Debian.gz,/proc/config.gz\} .
-## substitute your Pi's address for X.X.X.X, 
-## then enter your Pi's password; default is "raspberry")
-% cd ~/linux
+% scp pi@X.X.X.X:\{/usr/share/doc/raspberrypi-bootloader/changelog.Debian.gz,/proc/config.gz\} .`
+substitute your Pi's address for X.X.X.X, 
+then enter your Pi's password; default is "raspberry")
+`% cd ~/linux
 % fwhash=$(zcat ~/changelog.Debian.gz | grep -m 1 'as of' | awk '{print $NF}')
 % linuxhash=$(wget -qO- http://raw.github.com/raspberrypi/firmware/$fwhash/extra/git_hash)
 % git checkout $linuxhash
 % make mrproper
 % zcat ~/config.gz > ./.config
-% make ARCH=arm menuconfig
-## choose your kernel options; M means module, * means built into kernel
-% make ARCH=arm CROSS_COMPILE=~/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf- -k
+% make ARCH=arm menuconfig`
+choose your kernel options; M means module, * means built into kernel
+`% make ARCH=arm CROSS_COMPILE=~/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf- -k
 % mkdir -p modules
-% make modules_install ARCH=arm INSTALL_MOD_PATH=modules CROSS_COMPILE=~/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf-
+% make modules_install ARCH=arm INSTALL_MOD_PATH=modules CROSS_COMPILE=~/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf-`
 
 You will find the modules in ~/linux/modules/lib/modules/*/kernel, and you
 can copy them to your Pi using
-% scp moduleName pi@X.X.X.X:
+`% scp moduleName pi@X.X.X.X:`
 Once on your Pi, you can move or copy them from your home folder to the
 corresponding place inside /lib/modules/*/kernel.
 
 If you want to use the newly built kernel, then on Ubuntu, type:
-% cd ~/tools/mkimage
+`% cd ~/tools/mkimage
 % ./imagetool-uncompressed.py ~/linux/arch/arm/boot/zImage
-% scp kernel.img pi@X.X.X.X: 
+% scp kernel.img pi@X.X.X.X: `
 Once the new kernel is on your Pi, you can move or copy it from your home
 folder to /boot, and restart to use it. I strongly recommend you first
 rename /boot/kernel.img to something like /boot/kernel_orig.img first so
@@ -269,7 +267,7 @@ thermostat continues to function but have lost contact via USB wifi and
 keyboard.
 
 2015_02_20 Friday
-=================
+-----------------
 Was having a problem with the USB hanging on the pi...
 
 HOORAY!!!!!
